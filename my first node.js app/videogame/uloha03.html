@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Úloha č.3</title>
+
+  <style>
+    .Card {
+      flex: 0 0 auto;
+
+      width: 50px;
+      height: 50px;
+      vertical-align: center;
+      text-align: center;
+      border: 1px solid black;
+      border-radius: 5px;
+      font-size: 30px;
+      font-weight: bold;
+      font-family: Arial;
+      line-height: 50px;
+      margin: 0px 3px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+
+      -webkit-user-select: none;
+      /* Safari 3.1+ */
+      -moz-user-select: none;
+      /* Firefox 2+ */
+      -ms-user-select: none;
+      /* IE 10+ */
+      user-select: none;
+      /* Standard syntax */
+    }
+
+
+    .Game {
+      display: flex;
+      flex-direction: column;
+
+      height: 150px;
+    }
+
+    .Game_head {
+      flex: 0 0 auto;
+
+      display: flex;
+      justify-content: center;
+
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .Game_cards {
+      flex: 1 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .Game_foot {
+      flex: 0 0 auto;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    .Game_head span {
+      flex: 0 0 auto;
+    }
+
+    .Game_num1,
+    .Game_num2 {
+      padding: 0px 10px;
+    }
+
+
+    .Game_button {
+      flex: 0 0 auto;
+
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.2;
+      border: 1px outset black;
+      border-radius: 5px;
+
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+
+      margin: 5px;
+      padding: 3px;
+      font-weight: normal;
+      background-color: rgb(177, 177, 177);
+
+      -webkit-user-select: none;
+      /* Safari 3.1+ */
+      -moz-user-select: none;
+      /* Firefox 2+ */
+      -ms-user-select: none;
+      /* IE 10+ */
+      user-select: none;
+      /* Standard syntax */
+    }
+
+    .Game_button:hover {
+      background-color: rgb(226, 226, 226);
+    }
+
+    .Game_button:active {
+      position: relative;
+      left: 2px;
+      top: 2px;
+      box-shadow: none;
+    }
+  </style>
+  <script>
+    const $e = (elName, elClass, elParent) => {
+      let e = document.createElement(elName);
+      if (elClass) e.classList.add(elClass);
+      if (elParent) elParent.appendChild(e);
+      return e;
+    }
+
+
+    class Card {
+      
+      #value = '';
+      #state = 0;
+      colors = ['yellow', 'red'];
+
+      constructor() {
+        this.root = $e('div', 'Card');
+        this.value = '';
+        this.state = 0;
+      }
+
+      set value(v) {
+        this.root.textContent = this.#value = v;
+      }
+      get value() {
+        return this.#value;
+      }
+
+      set state(s) {
+        if (s < 0 || s >= this.colors.length) s = 0;
+        this.root.style.backgroundColor = this.colors[s];
+        this.#state = s;
+      }
+      get state() {
+        return this.#state;
+      }
+    }
+
+
+    class Game {
+      
+      #round = 0;
+      #score = 0;
+
+      constructor(parentElem) {
+
+        let el, el1;
+        this.elems = {};
+
+        this.root = $e('div', 'Game', parentElem);
+
+        el = this.elems.head = $e('div', 'Game_head', this.root);
+        el.innerHTML =
+          "<span>Round:</span><span class='Game_num1'>0</span><span>Score:</span><span class='Game_num2'>0</span>";
+
+
+        el = this.elems.cards = $e('div', 'Game_cards', this.root);
+
+
+        el = $e('div', 'Game_foot', this.root);
+
+        el1 = $e('div', 'Game_button', el);
+        el1.textContent = 'START';
+        el1.addEventListener('mousedown', e => this.start?.());
+
+        el1 = $e('div', 'Game_button', el);
+        el1.textContent = 'STOP';
+        el1.addEventListener('mousedown', e => this.stop?.());
+
+        el1 = $e('div', 'Game_button', el);
+        el1.textContent = 'RESET';
+        el1.addEventListener('mousedown', e => this.reset?.());
+
+
+        this.round = this.score = 0;
+      }
+
+      set round(x) {
+        this.elems.head.querySelector("span.Game_num1").textContent = x;
+        this.#round = x;
+      }
+      get round() {
+        return this.#round;
+      }
+
+      set score(x) {
+        this.elems.head.querySelector("span.Game_num2").textContent = x;
+        this.#score = x;
+      }
+      get score() {
+        return this.#score;
+      }
+
+
+      addCard(card) {
+        this.elems.cards.appendChild(card.root);
+      }
+      remCard(card) {
+        this.elems.cards.removeChild(card.root);
+      }
+    }
+
+
+
+
+
+
+    // Sem napiste MyCard a MyGame triedy.
+    function getRandomIndex(len) {
+      return Math.floor(Math.random() * len);
+    }
+
+    class MyCard extends Card {
+
+      constructor(values) {
+        super();
+        this.values = values;
+      }
+
+      random() {
+        let index = getRandomIndex(this.values.length)
+        let val = this.values[index];
+        this.value = val;
+      }
+
+    }
+
+    class MyGame extends Game {
+
+      constructor(parentElem, cardsAmount, values) {
+        super(parentElem);
+        this.cards = [];
+        for (let _ = 0; _ < cardsAmount; _++) {
+          let card = new MyCard(values)
+          this.addCard(card);
+          this.cards.push(card);
+        }
+      }
+
+      change() {
+        let card = this.cards[getRandomIndex(this.cards.length)];
+        card.random();
+      }
+
+      start() {
+        this.round++;
+        for (let card of this.cards) {
+          card.random();
+          card.state = 0;
+        }
+        this.setTimer();
+        console.log(this.gameTimerId);
+      }
+
+      unscoreCards() {
+        for (let c of this.cards) {
+          c.state = 0;
+        }
+      }
+
+      stop() {
+        this.unsetTimer()
+        let scoreChange = 0;
+        for (let card of this.cards) {
+          //if we havent changed the state already
+          if (card.state === 0) {
+            //add to score and change state
+            let scoringCards = this.getCardDuplicates(card);
+            scoreChange += scoringCards.length;
+            for (let c of scoringCards) {
+              c.state = 1;
+            }
+          }
+        }
+         this.score += scoreChange;
+         console.log(this.gameTimerId);
+      }
+
+      reset() {
+        this.unsetTimer();
+        this.round = 0;
+        this.score = 0;
+        for (let c of this.cards) {
+          c.value = 0;
+          c.state = 0;
+        }
+        console.log(this.gameTimerId);
+      }
+
+      getCardDuplicates(card) {
+        let duplicates = [];
+        for (let c of this.cards) {
+          if (c.value === card.value && c.state === 0) {
+            duplicates.push(c);
+          }
+        }
+        if (duplicates.length > 1) return duplicates;
+        return [];
+      }
+
+      setTimer() {
+        if (this.gameTimerId === undefined) {
+        this.gameTimerId = setInterval(() => this.change(), 300);
+        }
+        return;
+      }
+
+      unsetTimer() {
+        if (this.gameTimerId != undefined) {
+        clearInterval(this.gameTimerId);
+        }
+        delete this.gameTimerId;
+      }
+
+
+    }
+  </script>
+</head>
+
+<body>
+
+  <script>
+    console.log('Začíname!');
+
+
+    let game = new MyGame(document.body, 5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    console.log('Končíme!')
+  </script>
+
+</body>
+
+</html>

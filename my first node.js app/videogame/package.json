@@ -1,0 +1,3 @@
+{ "name": "videogame",
+    "main": "./server.js"
+}

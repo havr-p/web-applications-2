@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Norm(vec) {
+            return Math.sqrt(vec.reduce((sum, current) => {
+                return sum + current*current;
+            }, 0));
+        }
+        console.log(Norm([1, 1, 1, 1]));
+    
+        function EuclideDistance(vec1, vec2) {
+            let res;
+            if (vec1.length !== vec2.length) res = 0;
+            else {
+                let vecDiff = [];
+                for (let index = 0; index < vec1.length; index++) {
+                     vecDiff.push(vec2[index] - vec1[index]);
+                }
+                console.log(vecDiff);
+                res = Norm(vecDiff);
+            }
+            return res;
+        }
+        
+        console.log(EuclideDistance([1,0,0,1,1], [0,1,1,1,2]));
+        
+        function Mean(...vectors) {
+            let res;
+            if (!vectors.every(v => v.length === vectors[0].length)) res = 0;
+            else  {
+                let mean = new Array(vectors[0].length);
+                mean.fill(0);
+                for (vec of vectors) {
+                    for (let index = 0; index < vec.length; index++) {
+                        mean[index]+=vec[index];
+                    }
+                }
+                res = Array.from(mean, x => x / vectors.length);
+            }
+            return res;
+        }
+        console.log(Mean([1,1,1], [1,0,1], [0,0,1], [0,0,0]));
+    
+        function ReOrder(vec, vecArr) {
+            let res;
+            let dist = function(vec, arr) {
+                return EuclideDistance(vec, arr);
+            }
+            if (!vecArr.every(arr => arr.length === vecArr[0].length)) res = [];
+            else res = vecArr.sort((vec1, vec2) => dist(vec, vec1) - dist(vec, vec2));
+            return res;
+        }
+        console.log(ReOrder([0,0,0], [[2,1,3], [1,0,0], [2,1,1]]));
+
+        function Test(num) {
+            let testArr = [];
+            
+            for (let index = 0; index < num; index++) {
+                testArr.push(Math.random() * 10);
+            }
+            console.time('map');
+            let arr1 = testArr.map(v => v*3);
+            console.timeEnd('map');
+            console.time('for');
+            let arr2 = [];
+         for (let index = 0; index < testArr.length; index++) {
+                arr2.push(testArr[index] * 3);
+            }
+            console.timeEnd('for');
+        }
+        Test(10e6);
+    </script>
+</body>
+</html>
