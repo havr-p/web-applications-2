@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Úloha č.9</title>
+
+<style>
+</style>
+</head>
+
+<body>
+<script src='sprite.js'></script>
+<script>
+
+document.body.style.overflow = 'hidden';
+
+
+
+
+
+document.addEventListener ('DOMContentLoaded', async () => {
+
+  s1 = new Sprite ('capguy-walk.png', 1, 8);
+  await s1.ready;
+  s1.setPos (100, 50);
+  s1.show ();
+  s1.set (0, 7);
+  s1.start (20, 0, true);
+
+  s2 = new Sprite ('sprite1.png', 3, 5);
+  await s2.ready;
+  s2.setPos(50,0);
+  s2.show();
+  s2.set(0,13);
+  (async () => {
+    await s2.start (10, 10, false);
+    await s2.start (10, 10, false);
+    s2.flip ();
+    await s2.start (10, 10, false);
+    await s2.start (10, 10, false);
+    await s2.start (10, 10, false);
+    s2.setPos(0,0);
+  })();
+
+  s3 = new Sprite ('sprite2.png', 3, 5);
+  await s3.ready;
+  s3.setPos(50,0);
+  s3.show();
+  s3.set(0,13);
+  s3.start (10, 5, true);
+});
+
+
+
+</script>
+</body>
+</html>

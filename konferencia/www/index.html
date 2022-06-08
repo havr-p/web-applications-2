@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Úloha č.5</title>
+
+  <link rel="stylesheet" type="text/css" href="client.css">
+  <script src='client.js'></script>
+</head>
+<body>
+ <div class='Side'></div>
+ <div class='Main'>
+   <div class='Headline'>Zoznam účastníkov</div>
+   <div class='List'>
+     {{#db}}
+      <div class='Row'>{{name}} {{surname}}</div>
+      {{/db}}
+   </div>
+   <button class='Button'>Registruj sa</button>
+ </div>
+ <div class='Side'></div>
+</body>
+</html>

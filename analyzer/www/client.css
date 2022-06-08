@@ -1,0 +1,56 @@
+.Histogram_root {
+  display: flex;
+  flex-direction: column;
+
+  height: 400px;
+
+  margin: 0px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.5) inset;
+  padding: 10px;
+  filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+
+  background-color: #c7822c;
+}
+.Histogram_text {
+  flex: 0 0 auto;
+  resize: none;
+}
+.Histogram_graph {
+  flex: 1 1 auto;
+  display: flex;
+  overflow: auto;
+
+  background-color: #fde0bc;
+  margin-bottom: 10px;
+}
+
+.Histogram_col {
+  flex: 0 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 20px;
+}
+
+.Histogram_bar {
+  flex: 0 0 auto;
+
+  background-color: blue;
+  border: 1px solid black;
+  width: 12px;
+  box-shadow: 2px 1px 5px 0px rgba(0,0,0,0.5);
+}
+
+.Histogram_char {
+  flex: 0 0 auto;
+
+  font-size: 12pt;
+  font-weight: bold;
+
+  height: 20px;
+}
+

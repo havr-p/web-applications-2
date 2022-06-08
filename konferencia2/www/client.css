@@ -1,0 +1,65 @@
+
+.Main {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: yellow;
+
+  margin: 0px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  box-shadow: 10px 10px 1px 0px rgba(0,0,0,0.5);
+  padding: 10px;
+}
+
+.Headline {
+  flex: 0 0 auto;
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+background: linear-gradient(to bottom, rgba(169,3,41,1) 11%,rgba(143,2,34,1) 33%,rgba(109,0,25,1) 67%);
+  color: #FFFFFF;
+  margin-bottom: 15px;
+}
+
+.List {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.Row {
+  font-size: 22px;
+}
+
+.Button {
+  flex: 0 0 auto;
+  margin-top: 15px;
+}
+
+.Formular {
+  flex: 0 0 auto;
+
+  display:none;
+}
+.Formular2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.Formular input {
+  flex: 1 1 auto;
+  margin: 2px;
+}
+
+.Formular span {
+  font-size: 10pt;
+  font-weight: bold;
+  margin: 2px;
+}
+
+.Formular .sendButton {
+  align-self: center;
+}
+
